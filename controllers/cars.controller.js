@@ -21,16 +21,36 @@ exports.updateOneCar = async (req, res) => {
     /* need to use Object.keys like this in order to keep the original mongoose 
        document and then use save() */
     Object.keys(req.body).forEach((key) => {
+      // storing the owners in a variable
+      const owners = res.car.owners;
+
       // throwing error if the user has entered a property that doesn't exist on the car
       if (!res.car[key]) {
         throw new Error(`cannot update invalid property ${key}`);
       }
       // throwing error if user tries to edit creationDate
+      // unnecessary, but helpful to user
       if (key === "creationDate") {
         throw new Error("cannot update creationDate property");
       }
 
-      res.car[key] = req.body[key];
+      // if the user is trying to update the owners
+      if (key === "owners") {
+        // check if any new owner has "isCurrent: true"
+        const newCurrentOwner = req.body.owners.find(
+          (owner) => owner.isCurrent === true
+        );
+
+        // if there's a new current owner
+        if (newCurrentOwner) {
+          // set the old owners isCurrent value to false
+          res.car.owners.forEach((owner) => (owner.isCurrent = false));
+        }
+
+        res.car[key] = [...owners, ...req.body[key]];
+      } else {
+        res.car[key] = req.body[key];
+      }
     });
     const updatedCar = await res.car.save();
     res.send(updatedCar);
@@ -39,7 +59,14 @@ exports.updateOneCar = async (req, res) => {
   }
 };
 
-exports.updateManyCars = async (req, res) => {};
+exports.updateManyCars = async (req, res) => {
+  try {
+    // find the cars using query
+    const cars = Car.find(req.query); // {make, model}
+  } catch (err) {
+    res.status(err.code).send(err.message);
+  }
+};
 
 exports.deleteCar = async (req, res) => {
   try {

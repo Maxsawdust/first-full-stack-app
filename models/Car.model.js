@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 // creating an ownerSchema to define the structure of the owners property
 const ownerSchema = mongoose.Schema({
-  name: {
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
     type: String,
     required: true,
   },
@@ -15,6 +19,8 @@ const ownerSchema = mongoose.Schema({
     required: true,
   },
 });
+
+mongoose.model("Owner", ownerSchema);
 
 // creating a carSchema for Car models
 const carSchema = mongoose.Schema({
@@ -39,7 +45,14 @@ const carSchema = mongoose.Schema({
   // owners property is an array of objects that must follow the ownerSchema
   owners: {
     type: [ownerSchema],
-    required: true,
+    default: [],
+  },
+  currentOwner: {
+    type: mongoose.SchemaTypes.ObjectId,
+    default: function () {
+      const currentOwner = this.owners?.find((owner) => owner.isCurrent);
+      return currentOwner?._id || null;
+    },
   },
   price: {
     type: Number,
@@ -59,9 +72,14 @@ const carSchema = mongoose.Schema({
   },
 });
 
-// middleware that triggers before every document save, updating the updatedDate
+// middleware that triggers before every document save
 carSchema.pre("save", function (next) {
+  // updating the updatedDate
   this.updatedDate = Date.now();
+
+  // if an owner is added/changed, update current owner
+  const currentOwner = this.owners?.find((owner) => owner.isCurrent);
+  this.currentOwner = currentOwner?._id || null;
   next();
 });
 

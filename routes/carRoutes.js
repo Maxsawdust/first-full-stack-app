@@ -12,6 +12,7 @@ router.post("/", carsController.createCar);
 router.patch("/:id", getCarById, carsController.updateOneCar);
 
 // udpate information for more than one car.
+router.patch("/", carsController.updateManyCars);
 
 // Delete a specific document
 // passing in middleware to get the car by id
