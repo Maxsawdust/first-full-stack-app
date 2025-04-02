@@ -3,7 +3,7 @@ const router = express.Router();
 const carsController = require("../controllers/cars.controller.js");
 
 // assigning middleware function for neatness' sake
-const getCarById = carsController.getCar;
+const getCarById = carsController.getCarById;
 
 // Add a car to the collection
 router.post("/", carsController.createCar);

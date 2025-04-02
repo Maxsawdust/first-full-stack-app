@@ -21,10 +21,15 @@ exports.updateOneCar = async (req, res) => {
     /* need to use Object.keys like this in order to keep the original mongoose 
        document and then use save() */
     Object.keys(req.body).forEach((key) => {
-      // throwing error if the user has entered a property that doesn't exist on the car already
+      // throwing error if the user has entered a property that doesn't exist on the car
       if (!res.car[key]) {
         throw new Error(`cannot update invalid property ${key}`);
       }
+      // throwing error if user tries to edit creationDate
+      if (key === "creationDate") {
+        throw new Error("cannot update creationDate property");
+      }
+
       res.car[key] = req.body[key];
     });
     const updatedCar = await res.car.save();
@@ -38,8 +43,9 @@ exports.updateManyCars = async (req, res) => {};
 
 exports.deleteCar = async (req, res) => {
   try {
+    const carToDelete = res.car;
     // Using middleware to get car, removing the car from DB
-    await Car.deleteOne(res.car);
+    await Car.deleteOne({ _id: carToDelete._id });
     res.send("Deleted car.");
   } catch (err) {
     /* sending 500, internal error, because the middleware handles the 404 if
@@ -62,7 +68,7 @@ exports.getCars = async (req, res) => {
 
 // middleware that takes an id to get a car
 // not necessary, but handles errors nicely
-exports.getCar = async (req, res, next) => {
+exports.getCarById = async (req, res, next) => {
   // initialising car variable in local scope
   let car;
   try {
@@ -82,4 +88,11 @@ exports.getCar = async (req, res, next) => {
   next();
 };
 
-exports.getOlderCars = async (req, res) => {};
+exports.getOlderCars = async (req, res) => {
+  try {
+    const oldCars = await Car.where("year").lt(2020);
+    res.send(oldCars);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
