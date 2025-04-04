@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Car = require("../models/Car.model");
 
 exports.createCar = async (req, res) => {
@@ -59,12 +60,61 @@ exports.updateOneCar = async (req, res) => {
   }
 };
 
+/* NOTE: I'm not using Car.udpateMany() here, because it does not run through 
+   Mongoose's validation. Nor does it trigger my pre("save") middleware hook. */
 exports.updateManyCars = async (req, res) => {
   try {
-    // find the cars using query
-    const cars = Car.find(req.query); // {make, model}
+    // get the make and model from query
+    const { make, model } = req.query;
+
+    // finding all the cars that match the query
+    const carsToUpdate = await Car.find({ make: make, model: model });
+
+    // if no cars found, throw 404 err
+    if (carsToUpdate.length === 0) {
+      return res.status(404).send("No cars matching query found.");
+    }
+
+    // retrieving the key of the prop to update from req.body
+    // there will only be one key here.
+    const key = Object.keys(req.body)[0];
+    // creating empty updated cars array to send later
+    const updatedCars = [];
+
+    // generating a new _id so that if the user adds a new owner, they have the same _id for each car they own.
+    const new_id = new mongoose.Types.ObjectId();
+    // iterate through the cars
+    for (let car of carsToUpdate) {
+      // if the user is trying to update the owners
+      if (key === "owners") {
+        // create variable for new owner
+        const newOwner = req.body[key][0];
+        newOwner._id = new_id;
+
+        // check if any new owner has "isCurrent: true"
+        const newCurrentOwner = newOwner.isCurrent === true && true;
+
+        // if there's a new current owner
+        if (newCurrentOwner) {
+          // set all other owners to isCurrent: false
+          car.owners.forEach((owner) => (owner.isCurrent = false));
+        }
+
+        // push the new owner to the car's owners array.
+        car.owners.push(newOwner);
+      } else {
+        // if the key isn't owners, then it'll be price, and it can just be updated like so.
+        car.price = req.body.price;
+      }
+
+      // save the car
+      const savedCar = await car.save();
+      updatedCars.push(savedCar);
+    }
+
+    res.send(updatedCars);
   } catch (err) {
-    res.status(err.code).send(err.message);
+    res.status(400).send(err.message);
   }
 };
 
