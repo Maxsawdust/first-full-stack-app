@@ -1,0 +1,55 @@
+.MenuButton {
+  /* sizing */
+  height: 5rem;
+  width: 10rem;
+  font-size: 2rem;
+  padding: 1rem;
+  /* display */
+  display: flex;
+  /* positioning */
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  /* styling */
+  border-radius: 5rem;
+  border: 2px solid var(--quinary-color);
+  overflow: hidden;
+  background-color: var(--secondary-color);
+  transition: all 0.2s ease;
+}
+
+.MenuButton:hover {
+  background-color: white;
+}
+
+.button-contents {
+  /* sizing */
+
+  /* display */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* positioning */
+  gap: 1rem;
+  position: absolute;
+  top: 1.1rem;
+  left: 1.2rem;
+  /* styling */
+  transition: all 0.2s ease;
+}
+
+.menubutton-icon {
+  /* sizing */
+  max-width: 1.5rem;
+  max-height: 1.5rem;
+  /* display */
+  display: grid;
+  place-content: center;
+  /* positioning */
+  position: absolute;
+  right: 0.8rem;
+  top: 1.75rem;
+  /* styling */
+  transition: all 0.5s ease;
+}

@@ -1,0 +1,64 @@
+.Menu {
+  /* sizing */
+  width: 17rem;
+  height: 100%;
+  /* display */
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  margin-top: 25rem;
+  /* positioning */
+  position: relative;
+  left: 2rem;
+  /* styling */
+}
+
+.menu-nav,
+.cars-amount {
+  /* sizing */
+  padding: 1rem;
+  /* display */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* styling */
+  background-color: var(--secondary-color);
+  border: 2px solid var(--tertiary-color);
+  border-radius: 1rem;
+}
+
+.menu-nav.shown,
+.cars-amount.shown {
+  animation: menu-in 0.2s ease-in-out;
+}
+
+.menu-nav.hidden,
+.cars-amount.hidden {
+  opacity: 0;
+  transform: translateY(5rem) rotate(var(--rot-amount));
+  animation: menu-out 0.2s ease-in-out;
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(5rem) rotate(var(--rot-amount));
+    border-color: var(--quinary-color);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+    border-color: var(--tertiary-color);
+  }
+}
+
+@keyframes menu-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(5rem) rotate(var(--rot-amount));
+  }
+}
