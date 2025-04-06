@@ -1,0 +1,73 @@
+.NavButton {
+  /* sizing */
+  height: 4rem;
+  font-size: 1.5rem;
+  padding: 0 1rem;
+  /* display */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  /* positioning */
+  position: relative;
+  z-index: 1;
+  /* styling */
+  border-radius: 2rem;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.2s ease;
+}
+
+.NavButton:hover {
+  color: white;
+}
+
+.NavButton:active {
+  opacity: 0.9;
+}
+
+.NavButton::before {
+  /* sizing */
+  content: "";
+  height: 100%;
+  width: 100%;
+  /* positioning */
+  position: absolute;
+  right: 100%;
+  z-index: -1;
+  /* styling */
+  background-color: var(--tertiary-color);
+  border-radius: 2rem;
+}
+
+.NavButton:hover::before {
+  right: 0;
+  transition: right 0.2s ease;
+}
+
+.isCurrent-icon {
+  display: grid;
+  place-content: center;
+}
+
+.isCurrent-icon > svg {
+  animation: fade-in 0.3s ease-in-out;
+}
+
+.NavButton.current {
+  background-color: var(--tertiary-color);
+  color: white;
+  pointer-events: none;
+  cursor: default;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

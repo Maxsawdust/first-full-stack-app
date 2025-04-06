@@ -16,6 +16,7 @@
   overflow: hidden;
   background-color: var(--secondary-color);
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .MenuButton:hover {

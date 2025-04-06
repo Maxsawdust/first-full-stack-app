@@ -17,8 +17,7 @@ export default function Menu() {
       <div
         className={`cars-amount ${menuOpen ? "shown" : "hidden"}`}
         style={{ "--rot-amount": "-10deg" } as React.CSSProperties}>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil,
-        perferendis.
+        CARS IN INVENTORY: 0
       </div>
     </div>
   );
