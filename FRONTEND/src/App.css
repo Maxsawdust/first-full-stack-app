@@ -21,8 +21,10 @@
   /* display */
   display: flex;
   align-items: center;
+  justify-content: center;
   /* positioning */
   position: relative;
   /* styling */
   background-color: var(--primary-color);
+  overflow: hidden;
 }

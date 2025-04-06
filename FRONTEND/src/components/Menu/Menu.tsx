@@ -1,9 +1,11 @@
 import useMenu from "../../store/hooks/useMenu";
 import { NavButton } from "../";
 import "./Menu.css";
+import useCars from "../../store/hooks/useCars";
 
 export default function Menu() {
   const { menuOpen } = useMenu();
+  const { cars } = useCars();
 
   return (
     <div className="Menu">
@@ -17,7 +19,7 @@ export default function Menu() {
       <div
         className={`cars-amount ${menuOpen ? "shown" : "hidden"}`}
         style={{ "--rot-amount": "-10deg" } as React.CSSProperties}>
-        CARS IN INVENTORY: 0
+        CARS IN INVENTORY: {cars.length}
       </div>
     </div>
   );

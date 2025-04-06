@@ -1,24 +1,15 @@
-import { createContext, useState } from "react";
+import MenuProvider from "./menuContext";
+import CarProvider from "./carContext";
 
-type MenuContextType = {
-  menuOpen: boolean;
-  setMenuOpen: (value: boolean) => void;
-};
-
-export const MenuContext = createContext<MenuContextType>({
-  menuOpen: false,
-  setMenuOpen: () => {},
-});
-
+// context provider for other contexts
 export default function AppProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [menuOpen, setMenuOpen] = useState(false);
   return (
-    <MenuContext.Provider value={{ menuOpen, setMenuOpen }}>
-      {children}
-    </MenuContext.Provider>
+    <CarProvider>
+      <MenuProvider>{children}</MenuProvider>
+    </CarProvider>
   );
 }

@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const cors = require("cors");
 const express = require("express");
 const app = express();
 
@@ -23,14 +24,17 @@ mongoose
   // Message displayed if connection fails.
   .catch((err) => console.error("Error connecting to MongoDB", err.message));
 
+// Enabling CORS for all routes
+app.use(cors());
+
 // Middleware to parse JSON data from incoming requests
 app.use(express.json());
 // Middleware to parse URL-encoded data from incoming requests
 app.use(express.urlencoded({ extended: true }));
 
-// Set up routes to be handles from http://localhost:3000/cars
+// Set up routes to be handles from http://localhost:5000/cars
 app.use("/cars", carRoutes);
 
 // PORT variable stored in .env
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("Server is running on port " + PORT));
