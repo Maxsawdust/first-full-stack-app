@@ -1,7 +1,10 @@
 import "./AddCar.css";
-import { FormInput } from "../../components";
+import { FormInput, AddOwner } from "../../components";
+import { useState } from "react";
 
 export default function AddCar() {
+  const [ownersModalShown, setOwnersModalShown] = useState(false);
+
   return (
     <div className="AddCar sub-page">
       <h1 className="page-heading">ADD A CAR TO THE DATABASE</h1>
@@ -11,31 +14,28 @@ export default function AddCar() {
         <div className="input-container">
           <FormInput value="make">ENTER CAR MAKE</FormInput>
           <FormInput value="model">ENTER CAR MODEL</FormInput>
-        </div>
-
-        <div className="input-container">
           <FormInput value="registration">ENTER REG NUMBER</FormInput>
-          <FormInput value="year">ENTER PROD. YEAR</FormInput>
-        </div>
 
-        <div className="price-container">
+          <FormInput value="year">ENTER PROD. YEAR</FormInput>
           <FormInput value="price">ENTER PRICE</FormInput>
         </div>
 
-        <div className="radio-container">
-          <p>ARE THERE ANY CURRENT OR PREVIOUS OWNERS?</p>
-
+        <div className="add-car-owners">
           <div>
-            <input type="radio" name="owners-radio" id="yes-owners" />
-            <label htmlFor="yes-owners">YES</label>
+            <h2 className="page-subheading">ADD CURRENT OR PREVIOUS OWNERS</h2>
+            <button
+              type="button"
+              className="display-add-owners-modal"
+              onClick={() => setOwnersModalShown(true)}
+            >
+              ADD OWNER
+            </button>
           </div>
 
-          <div>
-            <input type="radio" name="owners-radio" id="no-owners" checked />
-            <label htmlFor="no-owners">NO</label>
-          </div>
+          <ul className="owners-list"></ul>
         </div>
       </form>
+      {ownersModalShown ? <AddOwner /> : null}
     </div>
   );
 }

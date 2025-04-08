@@ -1,7 +1,7 @@
 .FormInput {
   /* sizing */
-  height: 5rem;
-  width: 25rem;
+  height: 50%;
+  width: 90%;
   /* positioning */
   position: relative;
   /* styling */
@@ -18,7 +18,7 @@
 }
 
 .form-input-label {
-  font-size: 1.5rem;
+  font-size: 120%;
   position: absolute;
   left: 2.1rem;
   top: 50%;

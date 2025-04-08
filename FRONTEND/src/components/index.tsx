@@ -4,3 +4,4 @@ export { default as NavButton } from "./NavButton/NavButton";
 export { default as CarCard } from "./CarCard/CarCard";
 export { default as OwnerCard } from "./OwnerCard/OwnerCard";
 export { default as FormInput } from "./FormInput/FormInput";
+export { default as AddOwner } from "./AddOwner/AddOwner";
