@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { CarType } from "../../interfaces/CarInterface";
 
 // creating CarContextType
@@ -13,8 +13,6 @@ export const CarContext = createContext<CarContextType>({
   setCars: () => {},
 });
 
-import React from "react";
-
 export default function CarProvider({
   children,
 }: {
@@ -22,6 +20,33 @@ export default function CarProvider({
 }) {
   // state to store cars data from db
   const [cars, setCars] = useState<CarType[]>([]);
+
+  // useEffect to get the cars from DB on load
+  useEffect(() => {
+    try {
+      // geth the response from db
+      fetch("http://localhost:5000/cars")
+        .then((response) => {
+          // if the response isn't ok
+          if (!response.ok) {
+            // throw an error
+            throw new Error(
+              `Issue retrieving cars from database. status ${response.status}`
+            );
+          }
+          // else return the response in json format
+          return response.json();
+        })
+        .then((data: CarType[]) => {
+          // then setCars(data) so that other components can access it
+          setCars(data);
+          // console message to let you know it was successful
+          console.log(`Cars received: ${data.length} cars`);
+        });
+    } catch (err: any) {
+      console.error(`Error: ${err.message}`);
+    }
+  }, []);
 
   return (
     <CarContext.Provider value={{ cars, setCars }}>

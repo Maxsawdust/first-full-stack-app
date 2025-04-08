@@ -1,12 +1,28 @@
 import "./CarCard.css";
 import { OwnerCard } from "../";
 import { CarType } from "../../interfaces/CarInterface";
+import useCars from "../../store/hooks/useCars";
 
 export default function CarCard({ car }: { car: CarType }) {
+  const { cars, setCars } = useCars();
   // map through owners array to get currentOwner name
   const currentOwner = car.owners.find(
     (owner) => owner._id === car.currentOwner
   );
+
+  const deleteCar = async () => {
+    const options = {
+      method: "DELETE",
+    };
+
+    const response = await fetch(
+      `http://localhost:5000/cars/${car._id}`,
+      options
+    );
+
+    console.log(response, car._id);
+    setCars(cars.filter((c) => c._id !== car._id));
+  };
 
   return (
     <div className="CarCard">
@@ -19,10 +35,10 @@ export default function CarCard({ car }: { car: CarType }) {
 
         <div>
           <p>
-            <b>CREATED ON:</b> {new Date(car.creationDate).toDateString()}
+            <b>CREATED:</b> {new Date(car.creationDate).toUTCString()}
           </p>
           <p>
-            <b>UPDATED ON:</b> {new Date(car.updatedDate).toDateString()}
+            <b>UPDATED:</b> {new Date(car.updatedDate).toUTCString()}
           </p>
         </div>
       </div>
@@ -44,7 +60,7 @@ export default function CarCard({ car }: { car: CarType }) {
         </div>
 
         <div className="control-buttons">
-          <button>
+          <button onClick={deleteCar}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"

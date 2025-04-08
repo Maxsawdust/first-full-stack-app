@@ -2,6 +2,7 @@ import { OwnerType } from "../../interfaces/CarInterface";
 import "./OwnerCard.css";
 
 export default function OwnerCard({ owner }: { owner: OwnerType }) {
+  const address = owner.address.split(", ");
   return (
     <div className="OwnerCard">
       <div className="owner-info">
@@ -12,7 +13,9 @@ export default function OwnerCard({ owner }: { owner: OwnerType }) {
 
       <div className="owner-address">
         <h3>ADDRESS:</h3>
-        <p>{owner.address}</p>
+        {address.map((line, index) => {
+          return <p key={index}>{line}</p>;
+        })}
       </div>
     </div>
   );

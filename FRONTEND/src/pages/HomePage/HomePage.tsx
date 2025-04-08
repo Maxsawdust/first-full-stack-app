@@ -7,8 +7,8 @@ export default function HomePage() {
   const { cars } = useCars();
 
   return (
-    <div className="HomePage">
-      <h1 className="home-heading">ALL CARS IN INVENTORY</h1>
+    <div className="HomePage sub-page">
+      <h1 className="page-heading">ALL CARS IN INVENTORY</h1>
 
       <div className="cars-container">
         {/* map through cars array to return a CarCard for each of the cars */}

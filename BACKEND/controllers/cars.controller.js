@@ -23,10 +23,10 @@ exports.updateOneCar = async (req, res) => {
        document and then use save() */
     Object.keys(req.body).forEach((key) => {
       // storing the owners in a variable
-      const owners = res.car.owners;
+      const owners = req.car.owners;
 
       // throwing error if the user has entered a property that doesn't exist on the car
-      if (!res.car[key]) {
+      if (!req.car[key]) {
         throw new Error(`cannot update invalid property ${key}`);
       }
       // throwing error if user tries to edit creationDate
@@ -45,15 +45,15 @@ exports.updateOneCar = async (req, res) => {
         // if there's a new current owner
         if (newCurrentOwner) {
           // set the old owners isCurrent value to false
-          res.car.owners.forEach((owner) => (owner.isCurrent = false));
+          req.car.owners.forEach((owner) => (owner.isCurrent = false));
         }
 
-        res.car[key] = [...owners, ...req.body[key]];
+        req.car[key] = [...owners, ...req.body[key]];
       } else {
-        res.car[key] = req.body[key];
+        req.car[key] = req.body[key];
       }
     });
-    const updatedCar = await res.car.save();
+    const updatedCar = await req.car.save();
     res.send(updatedCar);
   } catch (err) {
     res.status(400).send(err.message);
@@ -120,7 +120,7 @@ exports.updateManyCars = async (req, res) => {
 
 exports.deleteCar = async (req, res) => {
   try {
-    const carToDelete = res.car;
+    const carToDelete = req.car;
     // Using middleware to get car, removing the car from DB
     await Car.deleteOne({ _id: carToDelete._id });
     res.send("Deleted car.");
@@ -161,7 +161,7 @@ exports.getCarById = async (req, res, next) => {
   }
 
   // creating car variable on the response object
-  res.car = car;
+  req.car = car;
   next();
 };
 

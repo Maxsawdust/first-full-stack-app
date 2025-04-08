@@ -9,21 +9,19 @@ const mongoose = require("mongoose");
 // Import the routes
 const carRoutes = require("./routes/carRoutes.js");
 
-// DB username and password stored in .env file.
-const USERNAME = process.env.DB_USERNAME;
-const PASSWORD = process.env.DB_PASSWORD;
+// DB URI stored in .env
+const MONGO_URI = process.env.MONGO_URI;
 
 // Using mongoose to connect to my Atlas cluster.
-// Please replace the username and password with your own credentials.
 mongoose
-  .connect(
-    `mongodb+srv://${USERNAME}:${PASSWORD}@my-first-cluster.wrc3i27.mongodb.net/?retryWrites=true&w=majority&appName=My-first-cluster`
-  )
+  .connect(MONGO_URI)
   // Message displayed if connection is successful.
   .then(() => console.log("Connected to MongoDB"))
   // Message displayed if connection fails.
-  .catch((err) => console.error("Error connecting to MongoDB", err.message));
-
+  .catch((err) => {
+    console.error("Error connecting to MongoDB", err.message);
+    process.exit(1);
+  });
 // Enabling CORS for all routes
 app.use(cors());
 

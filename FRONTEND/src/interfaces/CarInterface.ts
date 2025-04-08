@@ -15,6 +15,6 @@ export interface CarType {
   price: number;
   owners: OwnerType[];
   currentOwner: string;
-  creationDate: Date;
-  updatedDate: Date;
+  creationDate: string;
+  updatedDate: string;
 }

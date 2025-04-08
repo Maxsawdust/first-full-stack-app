@@ -1,0 +1,43 @@
+.FormInput {
+  /* sizing */
+  height: 5rem;
+  width: 25rem;
+  /* positioning */
+  position: relative;
+  /* styling */
+}
+
+.FormInput > input {
+  height: 100%;
+  width: 100%;
+  padding: 0 2rem;
+  font-size: 1.5rem;
+  font-family: "Lato", sans-serif;
+  border-radius: 5rem;
+  border: none;
+}
+
+.form-input-label {
+  font-size: 1.5rem;
+  position: absolute;
+  left: 2.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: all 0.2s;
+  opacity: 0.6;
+}
+
+.FormInput > input:focus,
+.FormInput > input:not(:placeholder-shown) {
+  outline: 2px solid var(--tertiary-color);
+}
+.FormInput > input:focus + .form-input-label,
+.FormInput > input:not(:placeholder-shown) + .form-input-label {
+  top: -0.2rem;
+  font-size: 1.25rem;
+  background-color: white;
+  border-radius: 2rem;
+  padding: 0 0.5rem;
+  opacity: 1;
+}

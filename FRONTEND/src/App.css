@@ -28,3 +28,26 @@
   background-color: var(--primary-color);
   overflow: hidden;
 }
+
+.sub-page {
+  /* sizing */
+  height: 100%;
+  width: 65%;
+  padding: 2rem 4rem;
+  /* display */
+  display: flex;
+  flex-direction: column;
+  /* styling */
+  background-color: var(--secondary-color);
+  box-shadow: 0 0 0.3rem #0000001e;
+}
+
+.page-heading {
+  width: fit-content;
+  font-size: 3rem;
+}
+
+.page-subheading {
+  opacity: 0.7;
+  font-style: italic;
+}
