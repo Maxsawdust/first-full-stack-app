@@ -23,7 +23,7 @@ export default function AddCar() {
         </div>
 
         <div className="radio-container">
-          <p>ARE THERE ANY CURRENT OWNERS?</p>
+          <p>ARE THERE ANY CURRENT OR PREVIOUS OWNERS?</p>
 
           <div>
             <input type="radio" name="owners-radio" id="yes-owners" />
