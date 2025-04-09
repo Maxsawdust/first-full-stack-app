@@ -58,6 +58,8 @@
   flex-direction: column;
   justify-content: center;
   gap: 2rem;
+  /* positioning */
+  position: relative;
   /* styling */
   background-color: white;
   border-radius: 2rem;
@@ -87,6 +89,7 @@
   border-radius: 3rem;
   border: 1px solid var(--quinary-color);
   overflow: hidden;
+  cursor: pointer;
 }
 
 .add-owner-button:hover {
@@ -118,4 +121,16 @@
   background-color: white;
   border-radius: 100%;
   border: 1px solid var(--quinary-color);
+  cursor: pointer;
+}
+
+.owners-close-button:hover {
+  background-color: var(--secondary-color);
+}
+
+.isCurrent-radios > .input-error {
+  position: absolute;
+  top: 33%;
+  left: 15%;
+  text-wrap: nowrap;
 }

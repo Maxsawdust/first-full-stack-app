@@ -18,7 +18,7 @@ export default function NavButton({ children, page }: NavButtonProps) {
 
   return (
     <button
-      className={`NavButton ${isCurrent ? "current" : ""}`}
+      className={`NavButton blue-slide ${isCurrent ? "current" : ""}`}
       onClick={handleClick}>
       {children}
 

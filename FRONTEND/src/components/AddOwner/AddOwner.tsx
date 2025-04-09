@@ -1,35 +1,109 @@
 import "./AddOwner.css";
 import { FormInput } from "../";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { ownerValidationSchema } from "../../utils/validationSchema";
+import { OwnerType } from "../../interfaces/CarInterface";
 
-export default function AddOwner() {
+// type for props
+type AddOwnerType = {
+  displayModal: (value: boolean) => void;
+  setOwners: React.Dispatch<React.SetStateAction<OwnerType[]>>;
+};
+
+export default function AddOwner({ displayModal, setOwners }: AddOwnerType) {
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      address: "",
+      isCurrent: "",
+    },
+
+    onSubmit: () => {
+      // create variable to store owner data
+      const ownerData: OwnerType = {
+        ...formik.values,
+        // making sure that isCurrent is a bool
+        isCurrent: formik.values.isCurrent === "true",
+      };
+      // set the state to display the owners in parent component
+      setOwners((prev: OwnerType[]) => [...prev, ownerData]);
+
+      // close the modal
+      displayModal(false);
+    },
+
+    validateOnBlur: false,
+    validateOnChange: false,
+
+    validationSchema: Yup.object({
+      ...ownerValidationSchema,
+    }),
+  });
+
   return (
-    //
     <div className="AddOwner">
       <div className="owner-modal">
         <h2 className="page-subheading">ADD OWNER</h2>
-        <button className="owners-close-button">X</button>
-        <form className="add-owner-form">
+
+        <button
+          className="owners-close-button"
+          onClick={() => displayModal(false)}>
+          X
+        </button>
+
+        <form className="add-owner-form" onSubmit={formik.handleSubmit}>
           <div className="owner-detail-inputs">
-            <FormInput value="firsName">FIRST NAME</FormInput>
-            <FormInput value="lastName">LAST NAME</FormInput>
+            <FormInput
+              errorMessage={formik.errors.firstName}
+              onChange={formik.handleChange}
+              value="firstName">
+              FIRST NAME
+            </FormInput>
+            <FormInput
+              errorMessage={formik.errors.lastName}
+              onChange={formik.handleChange}
+              value="lastName">
+              LAST NAME
+            </FormInput>
           </div>
 
           <div className="owner-address-input">
-            <FormInput value="address">ADDRESS</FormInput>
+            <FormInput
+              errorMessage={formik.errors.address}
+              onChange={formik.handleChange}
+              value="address">
+              ADDRESS
+            </FormInput>
           </div>
 
           <div className="isCurrent-radios">
             <p>IS THIS PERSON THE CURRENT OWNER?</p>
             <div>
               <label className="isCurrent-label">
-                <input type="radio" name="isCurrent" value="true" />
+                <input
+                  type="radio"
+                  name="isCurrent"
+                  value="true"
+                  onChange={formik.handleChange}
+                />
                 YES
               </label>
+
               <label className="isCurrent-label">
-                <input type="radio" name="isCurrent" value="false" />
+                <input
+                  type="radio"
+                  name="isCurrent"
+                  value="false"
+                  onChange={formik.handleChange}
+                />
                 NO
               </label>
             </div>
+            {formik.errors.isCurrent && (
+              <p className="input-error">{formik.errors.isCurrent}</p>
+            )}
           </div>
 
           <button type="submit" className="add-owner-button">

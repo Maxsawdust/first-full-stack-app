@@ -28,10 +28,13 @@
   opacity: 0.6;
 }
 
+.FormInput > input:hover,
 .FormInput > input:focus,
 .FormInput > input:not(:placeholder-shown) {
   outline: 2px solid var(--tertiary-color);
 }
+
+.FormInput > input:hover + .form-input-label,
 .FormInput > input:focus + .form-input-label,
 .FormInput > input:not(:placeholder-shown) + .form-input-label {
   top: -0.2rem;
