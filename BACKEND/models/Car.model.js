@@ -31,10 +31,12 @@ const carSchema = mongoose.Schema({
   model: {
     type: String,
     required: true,
+    lowercase: true,
   },
   make: {
     type: String,
     required: true,
+    lowercase: true,
   },
   // registration is always uppercase
   registration: {
@@ -53,6 +55,7 @@ const carSchema = mongoose.Schema({
       const currentOwner = this.owners?.find((owner) => owner.isCurrent);
       return currentOwner?._id || null;
     },
+    lowercase: true,
   },
   price: {
     type: Number,

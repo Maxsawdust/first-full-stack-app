@@ -54,6 +54,9 @@ export default function CarCard({ car }: { car: CarType }) {
         </div>
 
         <div className="owners-container">
+          {/* displaying an empty owner card if there's no owners */}
+          {car.owners.length === 0 ? <OwnerCard /> : null}
+          {/* displaying populated owner card if there's owners */}
           {car.owners.map((owner) => {
             return <OwnerCard owner={owner} key={owner._id} />;
           })}

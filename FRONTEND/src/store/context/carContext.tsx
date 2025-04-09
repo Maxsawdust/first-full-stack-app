@@ -5,12 +5,14 @@ import { CarType } from "../../interfaces/CarInterface";
 type CarContextType = {
   cars: CarType[];
   setCars: (value: CarType[]) => void;
+  // function to refresh DB fetch
+  refreshCars: () => Promise<void>;
 };
-
 // creating default context
 export const CarContext = createContext<CarContextType>({
   cars: [],
   setCars: () => {},
+  refreshCars: async () => {},
 });
 
 export default function CarProvider({
@@ -21,8 +23,7 @@ export default function CarProvider({
   // state to store cars data from db
   const [cars, setCars] = useState<CarType[]>([]);
 
-  // useEffect to get the cars from DB on load
-  useEffect(() => {
+  const refreshCars = async () => {
     try {
       // geth the response from db
       fetch("http://localhost:5000/cars")
@@ -46,10 +47,15 @@ export default function CarProvider({
     } catch (err: any) {
       console.error(`Error: ${err.message}`);
     }
+  };
+
+  // useEffect to get the cars from DB on load
+  useEffect(() => {
+    refreshCars();
   }, []);
 
   return (
-    <CarContext.Provider value={{ cars, setCars }}>
+    <CarContext.Provider value={{ cars, setCars, refreshCars }}>
       {children}
     </CarContext.Provider>
   );

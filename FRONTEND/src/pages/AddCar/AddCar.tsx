@@ -4,13 +4,20 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { carValidationSchema } from "../../utils/validationSchema";
-import { OwnerType } from "../../interfaces/CarInterface";
+import useOwners from "../../store/hooks/useOwners";
+import { useNavigate } from "react-router-dom";
+import useCars from "../../store/hooks/useCars";
 
 export default function AddCar() {
   // state to open and close modal window
   const [ownersModalShown, setOwnersModalShown] = useState(false);
   // state to display added owners
-  const [owners, setOwners] = useState<OwnerType[]>([]);
+  const { owners, setOwners } = useOwners();
+
+  // getting function to refresh DB from hook
+  const { refreshCars } = useCars();
+
+  const navigate = useNavigate();
 
   // using formik for validation
   const formik = useFormik({
@@ -22,7 +29,39 @@ export default function AddCar() {
       price: "",
     },
 
-    onSubmit: () => {},
+    onSubmit: async () => {
+      // defining options for fetch method
+      const options = {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formik.values,
+          owners: [...owners],
+        }),
+      };
+
+      try {
+        // trying to make a POST request to DB
+        const response = await fetch("http://localhost:5000/cars/", options);
+        const data = await response.json();
+
+        // refresh the cars state
+        refreshCars();
+
+        // logging success message
+        console.log("success", data);
+
+        // reset owners for the next addition
+        setOwners([]);
+
+        // navigate to "/" to show added car
+        navigate("/");
+      } catch (err) {
+        console.error(err);
+      }
+    },
 
     validateOnChange: false,
     validateOnBlur: false,
@@ -84,15 +123,17 @@ export default function AddCar() {
           </div>
 
           <ul className="owners-list">
-            {owners.map((owner) => {
+            {owners.map((owner, index) => {
               return (
-                <div className="owner-details">
-                  <p className="owner-name">{`${owner.firstName} ${owner.lastName}`}</p>
-                  <p className="owner-address">{owner.address}</p>
-                  <p className="owner-status">
-                    {owner.isCurrent ? "CURRENT OWNER" : "PREVIOUS OWNER"}
+                <li
+                  className="owner-details"
+                  key={`${owner.firstName}-${index}`}>
+                  <p className="form-owner-name">{`${owner.firstName} ${owner.lastName}`}</p>
+                  <p className="form-owner-address">{owner.address}</p>
+                  <p className="form-owner-status">
+                    {owner.isCurrent ? "Current Owner" : "Previous Owner"}
                   </p>
-                </div>
+                </li>
               );
             })}
           </ul>
@@ -101,7 +142,7 @@ export default function AddCar() {
         <button className="submit-car-addition blue-slide">ADD CAR</button>
       </form>
       {ownersModalShown ? (
-        <AddOwner displayModal={setOwnersModalShown} setOwners={setOwners} />
+        <AddOwner displayModal={setOwnersModalShown} />
       ) : null}
     </div>
   );

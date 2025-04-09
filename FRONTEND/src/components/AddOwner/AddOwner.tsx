@@ -4,14 +4,17 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ownerValidationSchema } from "../../utils/validationSchema";
 import { OwnerType } from "../../interfaces/CarInterface";
+import useOwners from "../../store/hooks/useOwners";
 
 // type for props
 type AddOwnerType = {
   displayModal: (value: boolean) => void;
-  setOwners: React.Dispatch<React.SetStateAction<OwnerType[]>>;
 };
 
-export default function AddOwner({ displayModal, setOwners }: AddOwnerType) {
+export default function AddOwner({ displayModal }: AddOwnerType) {
+  // getting owners state variables from custom hook and context
+  const { owners, setOwners } = useOwners();
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -21,6 +24,18 @@ export default function AddOwner({ displayModal, setOwners }: AddOwnerType) {
     },
 
     onSubmit: () => {
+      // if the submitted owner isCurrent
+      if (formik.values.isCurrent) {
+        // make sure all other owners in the array are now previous
+        const updatedOwners = owners.map((owner) => {
+          return {
+            ...owner,
+            isCurrent: false,
+          };
+        });
+        setOwners([...updatedOwners]);
+      }
+
       // create variable to store owner data
       const ownerData: OwnerType = {
         ...formik.values,
