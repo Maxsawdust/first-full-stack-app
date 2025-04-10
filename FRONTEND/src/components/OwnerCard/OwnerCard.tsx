@@ -1,5 +1,4 @@
 import { OwnerType } from "../../interfaces/CarInterface";
-import { EditOwnerModal } from "../";
 import "./OwnerCard.css";
 import useModal from "../../store/hooks/useModal";
 import useOwners from "../../store/hooks/useOwners";

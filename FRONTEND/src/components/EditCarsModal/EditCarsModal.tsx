@@ -1,5 +1,4 @@
 import { useFormik } from "formik";
-import { CarType } from "../../interfaces/CarInterface";
 import useModal from "../../store/hooks/useModal";
 import useOwners from "../../store/hooks/useOwners";
 import FormInput from "../FormInput/FormInput";
@@ -9,15 +8,13 @@ import "./EditCarsModal.css";
 import { carValidationSchema } from "../../utils/validationSchema";
 import useCars from "../../store/hooks/useCars";
 
-type EditModalProps = {
-  car: CarType;
-};
-
-export default function EditCarsModal({ car }: EditModalProps) {
-  const { setCarsModalShown } = useModal().editCars;
+export default function EditCarsModal() {
+  const { setCarsModalShown, carToEdit, setCarToEdit } = useModal().editCars;
   const { setAddOwnersModalShown } = useModal().addOwners;
   const { owners, setOwners } = useOwners();
   const { refreshCars } = useCars();
+
+  const car = carToEdit!;
 
   const formik = useFormik({
     initialValues: {
@@ -65,6 +62,8 @@ export default function EditCarsModal({ car }: EditModalProps) {
         setCarsModalShown(false);
         // clear owners array
         setOwners([]);
+        // clear carToEdit
+        setCarToEdit(null);
       } catch (err) {
         console.error(err);
       }

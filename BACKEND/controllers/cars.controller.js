@@ -48,7 +48,7 @@ exports.updateOneCar = async (req, res) => {
           req.car.owners.forEach((owner) => (owner.isCurrent = false));
         }
 
-        req.car[key] = [...owners, ...req.body[key]];
+        req.car[key] = req.body[key];
       } else {
         req.car[key] = req.body[key];
       }

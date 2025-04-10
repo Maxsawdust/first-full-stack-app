@@ -7,7 +7,8 @@ import useOwners from "../../store/hooks/useOwners";
 
 export default function CarCard({ car }: { car: CarType }) {
   // getting edit modal state from context
-  const { carsModalShown, setCarsModalShown } = useModal().editCars;
+  const { carsModalShown, setCarsModalShown, setCarToEdit, carToEdit } =
+    useModal().editCars;
   const { ownersModalShown, ownerToEdit } = useModal().editOwners;
   const { addOwnersModalShown } = useModal().addOwners;
   const { setOwners } = useOwners();
@@ -56,8 +57,10 @@ export default function CarCard({ car }: { car: CarType }) {
           <h3>MAKE: {car.make}</h3>
           <h3>MODEL: {car.model}</h3>
           <h3>
-            CURRENT OWNER:{" "}
-            {`${currentOwner?.firstName} ${currentOwner?.lastName}`}
+            CURRENT OWNER:
+            {currentOwner
+              ? ` ${currentOwner?.firstName} ${currentOwner?.lastName}`
+              : "N/A"}
           </h3>
         </div>
 
@@ -84,6 +87,7 @@ export default function CarCard({ car }: { car: CarType }) {
           <button
             onClick={() => {
               setCarsModalShown(true);
+              setCarToEdit(car);
               setOwners(car.owners);
             }}>
             <svg
@@ -98,7 +102,8 @@ export default function CarCard({ car }: { car: CarType }) {
         </div>
       </div>
 
-      {carsModalShown && <EditCarsModal car={car} />}
+      {/* making sure that only the modal for the respective car is displayed */}
+      {carsModalShown && carToEdit === car && <EditCarsModal />}
 
       {ownersModalShown && <EditOwnerModal owner={ownerToEdit} />}
 

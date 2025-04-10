@@ -1,12 +1,13 @@
 import { createContext, useEffect } from "react";
 import { useState } from "react";
-import { OwnerType } from "../../interfaces/CarInterface";
-import { useLocation } from "react-router-dom";
+import { CarType, OwnerType } from "../../interfaces/CarInterface";
 
 type ModalContextType = {
   editCars: {
     carsModalShown: boolean;
     setCarsModalShown: (value: boolean) => void;
+    carToEdit: CarType | null;
+    setCarToEdit: (value: CarType | null) => void;
   };
 
   editOwners: {
@@ -26,6 +27,8 @@ export const ModalContext = createContext<ModalContextType>({
   editCars: {
     carsModalShown: false,
     setCarsModalShown: () => {},
+    carToEdit: null,
+    setCarToEdit: () => {},
   },
 
   editOwners: {
@@ -47,6 +50,7 @@ export default function ModalProvider({
   children: React.ReactNode;
 }) {
   const [carsModalShown, setCarsModalShown] = useState(false);
+  const [carToEdit, setCarToEdit] = useState<CarType | null>(null);
 
   const [ownersModalShown, setOwnersModalShown] = useState(false);
   const [ownerToEdit, setOwnerToEdit] = useState<OwnerType | null>(null);
@@ -62,6 +66,8 @@ export default function ModalProvider({
     editCars: {
       carsModalShown,
       setCarsModalShown,
+      carToEdit,
+      setCarToEdit,
     },
 
     editOwners: {
