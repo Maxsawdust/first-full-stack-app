@@ -1,11 +1,11 @@
 import "./FormInput.css";
-import { useState } from "react";
 
 type FormInputType = {
   children: string;
   value: string;
   onChange: (e: React.ChangeEvent) => void;
   errorMessage: string | undefined;
+  content?: string | number | undefined;
 };
 
 export default function FormInput({
@@ -13,10 +13,17 @@ export default function FormInput({
   value,
   onChange,
   errorMessage,
+  content,
 }: FormInputType) {
   return (
     <div className="FormInput">
-      <input type="text" placeholder="" onChange={onChange} name={value} />
+      <input
+        value={content && content}
+        type="text"
+        placeholder=""
+        onChange={onChange}
+        name={value}
+      />
       <span className="form-input-label">{children}</span>
       <p className="input-error">{errorMessage}</p>
     </div>

@@ -1,6 +1,7 @@
 import MenuProvider from "./menuContext";
 import CarProvider from "./carContext";
 import OwnerProvider from "./ownerContext";
+import ModalProvider from "./modalContext";
 
 // context provider for other contexts
 export default function AppProvider({
@@ -9,10 +10,12 @@ export default function AppProvider({
   children: React.ReactNode;
 }) {
   return (
-    <OwnerProvider>
-      <CarProvider>
-        <MenuProvider>{children}</MenuProvider>
-      </CarProvider>
-    </OwnerProvider>
+    <ModalProvider>
+      <OwnerProvider>
+        <CarProvider>
+          <MenuProvider>{children}</MenuProvider>
+        </CarProvider>
+      </OwnerProvider>
+    </ModalProvider>
   );
 }

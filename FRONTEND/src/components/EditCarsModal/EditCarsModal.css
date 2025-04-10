@@ -1,0 +1,104 @@
+.EditCarsModal {
+  /* sizing */
+  height: 100vh;
+  width: 100vw;
+  /* display */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* positioning */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  /* styling */
+  background-color: #00000086;
+}
+
+.edit-container {
+  /* sizing */
+  height: 70%;
+  width: 50%;
+  padding: 1rem 2rem;
+  /* display */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* styling */
+  background-color: var(--primary-color);
+  border-radius: 2rem;
+}
+
+.edit-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-car-info {
+  /* sizing */
+  height: 40%;
+  /* display */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* position */
+  margin-top: 2rem;
+  /* styling */
+  border-bottom: 5px solid var(--tertiary-color);
+}
+
+.edit-modal-owner-section {
+  margin-top: 2rem;
+  min-height: 40%;
+  max-height: 40%;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.edit-modal-owners-container {
+  overflow: scroll;
+}
+
+.edit-cars-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-cars-buttons > button {
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  align-self: start;
+  margin-top: 2rem;
+  border-radius: 2rem;
+  border: 1px solid var(--quinary-color);
+  background-color: white;
+}
+
+.owners-container.edit-modal-owners-container {
+  /* sizing */
+  padding: 1rem;
+  /* styling */
+  background-color: var(--secondary-color);
+}
+
+.edit-close-button {
+  height: 2rem;
+  width: 2rem;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background-color: white;
+  border-radius: 100%;
+  border: 1px solid var(--quinary-color);
+  cursor: pointer;
+}
+
+.edit-close-button:hover {
+  background-color: var(--secondary-color);
+}
+
+.submit-edit-button {
+  align-self: end;
+}

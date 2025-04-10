@@ -1,0 +1,48 @@
+.EditOwnerModal {
+  /* sizing */
+  height: 100vh;
+  width: 100vw;
+  /* display */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* position */
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: #00000086;
+}
+
+.owners-edit-container {
+  height: 50%;
+}
+
+.edit-close-button {
+  display: grid;
+  place-content: center;
+}
+
+.edit-owner-info {
+  height: 35%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+}
+
+.edit-owner-address {
+  height: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-owner-changes {
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  align-self: center;
+  border-radius: 2rem;
+  border: 1px solid var(--quinary-color);
+  background-color: white;
+}

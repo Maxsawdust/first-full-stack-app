@@ -1,16 +1,17 @@
 import "./AddCar.css";
 import { FormInput, AddOwner } from "../../components";
-import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { carValidationSchema } from "../../utils/validationSchema";
 import useOwners from "../../store/hooks/useOwners";
 import { useNavigate } from "react-router-dom";
 import useCars from "../../store/hooks/useCars";
+import useModal from "../../store/hooks/useModal";
 
 export default function AddCar() {
   // state to open and close modal window
-  const [ownersModalShown, setOwnersModalShown] = useState(false);
+  const { addOwnersModalShown, setAddOwnersModalShown } = useModal().addOwners;
+
   // state to display added owners
   const { owners, setOwners } = useOwners();
 
@@ -38,7 +39,17 @@ export default function AddCar() {
         },
         body: JSON.stringify({
           ...formik.values,
-          owners: [...owners],
+          owners: [
+            // getting rid of the temp_id values in the owners array
+            ...owners.map((owner) => {
+              return {
+                firstName: owner.firstName,
+                lastName: owner.lastName,
+                address: owner.address,
+                isCurrent: owner.isCurrent,
+              };
+            }),
+          ],
         }),
       };
 
@@ -117,7 +128,7 @@ export default function AddCar() {
             <button
               type="button"
               className="display-add-owners-modal blue-slide"
-              onClick={() => setOwnersModalShown(true)}>
+              onClick={() => setAddOwnersModalShown(true)}>
               ADD OWNER
             </button>
           </div>
@@ -141,9 +152,7 @@ export default function AddCar() {
 
         <button className="submit-car-addition blue-slide">ADD CAR</button>
       </form>
-      {ownersModalShown ? (
-        <AddOwner displayModal={setOwnersModalShown} />
-      ) : null}
+      {addOwnersModalShown ? <AddOwner /> : null}
     </div>
   );
 }

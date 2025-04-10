@@ -35,3 +35,44 @@
   justify-content: center;
   align-items: center;
 }
+
+.owner-card-control-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.owner-card-control-buttons > button {
+  height: 2.5rem;
+  width: 2.5rem;
+  display: grid;
+  place-content: center;
+  align-self: center;
+  position: relative;
+  z-index: 1;
+  border-radius: 100%;
+  margin-right: 2rem;
+  border: 1px solid var(--quinary-color);
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+.owner-card-control-buttons > button:hover > svg {
+  fill: white;
+}
+
+.owner-card-control-buttons > button::before {
+  content: "";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  background-color: var(--tertiary-color);
+  border-radius: 100%;
+  transform: scale(0);
+  transition: all 0.075s ease;
+}
+
+.owner-card-control-buttons > button:hover::before {
+  transform: scale(1);
+}

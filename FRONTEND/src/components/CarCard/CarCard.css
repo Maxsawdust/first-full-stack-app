@@ -82,7 +82,6 @@
   border-radius: 100%;
   border: 1px solid var(--quinary-color);
   transition: all 0.2s ease;
-  cursor: pointer;
 }
 
 .control-buttons > button:hover > svg {
