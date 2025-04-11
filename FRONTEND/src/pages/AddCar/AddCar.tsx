@@ -1,5 +1,5 @@
 import "./AddCar.css";
-import { FormInput, AddOwner } from "../../components";
+import { FormInput, AddOwner, OwnersList } from "../../components";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { carValidationSchema } from "../../utils/validationSchema";
@@ -133,21 +133,7 @@ export default function AddCar() {
             </button>
           </div>
 
-          <ul className="owners-list">
-            {owners.map((owner, index) => {
-              return (
-                <li
-                  className="owner-details"
-                  key={`${owner.firstName}-${index}`}>
-                  <p className="form-owner-name">{`${owner.firstName} ${owner.lastName}`}</p>
-                  <p className="form-owner-address">{owner.address}</p>
-                  <p className="form-owner-status">
-                    {owner.isCurrent ? "Current Owner" : "Previous Owner"}
-                  </p>
-                </li>
-              );
-            })}
-          </ul>
+          <OwnersList owners={owners} />
         </div>
 
         <button className="submit-car-addition blue-slide">ADD CAR</button>

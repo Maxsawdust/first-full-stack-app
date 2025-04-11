@@ -1,0 +1,76 @@
+.UpdateCars {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.make-model-selects {
+  display: flex;
+  gap: 5%;
+}
+
+.make-model-selects > select {
+  /* sizing */
+  font-size: 1.75rem;
+  padding: 0.5rem 1rem;
+  /* styling */
+  border-radius: 1rem;
+  border: 2px solid var(--quinary-color);
+  background-color: white;
+  cursor: pointer;
+}
+
+.make-model-selects > select:disabled {
+  border-color: grey;
+  cursor: not-allowed;
+}
+
+.selected-cars-container {
+  /* sizing */
+  height: 14rem;
+  width: 100%;
+  /* display */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* styling */
+  overflow: scroll;
+  scroll-snap-type: y mandatory;
+  box-shadow: 0.5rem 0.5rem 0.5rem #c3c3c3;
+}
+
+.bulk-edit-form {
+  /* sizing */
+  flex: 1;
+  /* display */
+}
+
+.bulk-edit-form > div {
+  height: 35%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 5rem;
+}
+
+.bulk-edit-add-owners {
+  font-size: 1.5rem;
+  width: 30%;
+  height: 50%;
+  border-radius: 3rem;
+  border: 1px solid var(--quinary-color);
+  background-color: white;
+}
+
+.bulk-edit-submit {
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  border-radius: 3rem;
+  border: 1px solid var(--quinary-color);
+  background-color: white;
+}
+
+.bulk-edit-owners-container {
+  background-color: var(--primary-color);
+  margin-bottom: 3rem;
+}

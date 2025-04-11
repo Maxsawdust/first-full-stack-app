@@ -12,7 +12,7 @@ export default function AddOwner() {
   // getting owners state variables from custom hook and context
   const { owners, setOwners } = useOwners();
 
-  const { addOwnersModalShown, setAddOwnersModalShown } = useModal().addOwners;
+  const { setAddOwnersModalShown } = useModal().addOwners;
 
   const { setCarsModalShown } = useModal().editCars;
 

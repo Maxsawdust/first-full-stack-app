@@ -7,3 +7,4 @@ export { default as FormInput } from "./FormInput/FormInput";
 export { default as AddOwner } from "./AddOwner/AddOwner";
 export { default as EditCarsModal } from "./EditCarsModal/EditCarsModal";
 export { default as EditOwnerModal } from "./EditOwnerModal/EditOwnerModal";
+export { default as OwnersList } from "./OwnersList/OwnersList";

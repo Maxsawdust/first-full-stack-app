@@ -1,4 +1,4 @@
-import { CarCard, EditCarsModal } from "../../components";
+import { CarCard } from "../../components";
 import useCars from "../../store/hooks/useCars";
 import "./HomePage.css";
 

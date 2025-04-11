@@ -8,6 +8,7 @@
   flex-direction: column;
   /* styling */
   background-color: var(--primary-color);
+  scroll-snap-align: start;
 }
 
 .card-header {
