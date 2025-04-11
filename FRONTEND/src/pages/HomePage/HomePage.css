@@ -1,3 +1,14 @@
+.filter-by-old {
+  /* sizing */
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  align-self: flex-start;
+  /* styling */
+  border-radius: 2rem;
+  border: 2px solid var(--quinary-color);
+  background-color: white;
+}
+
 .cars-container {
   /* sizing */
   height: fit-content;

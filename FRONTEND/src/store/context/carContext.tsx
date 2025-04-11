@@ -26,24 +26,18 @@ export default function CarProvider({
   const refreshCars = async () => {
     try {
       // geth the response from db
-      fetch("http://localhost:5000/cars")
-        .then((response) => {
-          // if the response isn't ok
-          if (!response.ok) {
-            // throw an error
-            throw new Error(
-              `Issue retrieving cars from database. status ${response.status}`
-            );
-          }
-          // else return the response in json format
-          return response.json();
-        })
-        .then((data: CarType[]) => {
-          // then setCars(data) so that other components can access it
-          setCars(data);
-          // console message to let you know it was successful
-          console.log(`Cars received: ${data.length} cars`);
-        });
+      const response = await fetch("http://localhost:5000/cars");
+
+      // if the response isn't ok
+      if (!response.ok) {
+        // throw an error
+        throw new Error(
+          `Issue retrieving cars from database. status ${response.status}`
+        );
+      }
+      const data = await response.json();
+      setCars(data);
+      console.log(`Cars received: ${data.length} cars`);
     } catch (err: any) {
       console.error(`Error: ${err.message}`);
     }

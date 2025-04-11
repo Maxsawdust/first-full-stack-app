@@ -103,6 +103,7 @@ exports.updateManyCars = async (req, res) => {
         // push the new owner to the car's owners array.
         car.owners.push(newOwner);
       }
+
       // if the key isn't owners, then it'll be price, and it can just be updated like so.
       car.price = req.body.price;
 
